@@ -1,7 +1,212 @@
 <!DOCTYPE html>
 <html>
 <body>
-  <h1> sup dudes</h1>
-  <p> Hosting test </p>
+<link href="css/style.css" media="all" rel="stylesheet" type="text/css" />
+
+
+<img src="logo2.png" style="position:fixed;left:0px">
+<img src="QQ Title.jpg" style="position:fixed;top:0px;left:275px;width:800px;">
+
+ <!--RADIO 1-->
+<input type="radio" class="radio_item" value="author" name="item" id="radio1" checked="checked">
+    <label class="label_item" for="radio1"> <img src="TopAuth1.jpg" style="position:fixed; left:50px; top:250px; border:5px solid black";> </label>
+<!--RADIO 2-->
+<input type="radio" class="radio_item" value="page_views" name="item" id="radio2">
+<label class="label_item" for="radio2"> <img src="MostPV1.jpg" style="position:fixed; left:50px; top:355px; border:5px solid black";> </label>
+</label>
+<!--RADIO 3-->
+<input type="radio" class="radio_item" value="page_uniques" name="item" id="radio3">
+<label class="label_item" for="radio3"> <img src="Bestref1.jpg" style="position:fixed; left:50px; top:460px; border:5px solid black";> </label>
+</label>
+<!--RADIO 4-->
+<input type="radio" class="radio_item" value="day" name="item2" id="radio4" checked="checked">
+   <label class="label_item" for="radio4"> <img src="yest1.jpg" style="position:fixed; left:850px; top:250px; border:5px solid black";> </label>
+<!--RADIO 5-->
+<input type="radio" class="radio_item" value="week" name="item2" id="radio5">
+<label class="label_item" for="radio5"> <img src="lw1.jpg" style="position:fixed; left:850px; top:355px; border:5px solid black";> </label>
+</label>
+<!--RADIO 6-->
+<input type="radio" class="radio_item" value="month" name="item2" id="radio6">
+<label class="label_item" for="radio6"> <img src="lm1.jpg" style="position:fixed; left:850px; top:460px; border:5px solid black";> </label>
+</label>
+
+<p style="position:fixed; top:180px; left:50px;font-size:200%;width:800px;color:white">
+<h>Choose a Report:</h>
+</p>
+<body bgcolor="#143250">
+</body>
+
+<p style="position:fixed;top:180px;left:850px;font-size:200%;width:800px;color:white">
+<h>Choose a Time Frame:</h>
+</p>
+<body bgcolor="#143250">
+</body>
+
+<p style="position:fixed;top:400px;left:525px;width:300px;font-size:200%;width:800px;color:white";>
+Enter your API Key:
+</p>
+
+
+<form id="form" onsubmit="return false;">
+<input   style=position:fixed;top:500px;left:550px;width:200px; type="text" id="userApi">
+<input   style=position:fixed;top:600px;left:550px;width:200px; type="submit"    onclick="othername()">
+</form>
+
+<p style="position:fixed;top:250px;left:535px;width:300px;font-size:200%;color:white";>
+Domain / Website:
+</p>
+
+
+<form id="form" onsubmit="return false;">
+<input   style=position:fixed;top:345px;left:505px;width:300px; type="text" id="domain">
+</form>
+
+
+<script>
+
+
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+
+
+}
+
+function othername()
+{
+//var input = document.getElementById("userEmail").value;
+var input2 = document.getElementById("userApi").value;
+var input3 = document.getElementById("domain").value;
+var inputr = document.querySelector('input[name="item"]:checked').value;
+var inputf = document.querySelector('input[name="item2"]:checked').value;
+var d = new Date().toISOString().slice(0,10);
+var convert = new Date();
+
+if (inputf == "day" & inputr == "author"){
+   convert.setDate(convert.getDate()-1)
+   var cmon = convert.toISOString().slice(0,10)
+
+
+var result = httpGet("http://api.chartbeat.com/query/v2/submit/page/?host=" + input3 + "&apikey=" + input2 + "&start=" + cmon + "&end=" + d + "&metrics=page_views&dimensions=" + inputr);
+
+console.log(result);
+
+var obj = JSON.parse(result);
+
+console.log(obj.query_id);
+
+window.location = "http://api.chartbeat.com/query/v2/fetch/?host=" + input3 + "&apikey=" + input2 + "&query_id=" + obj.query_id;
+}
+else if (inputf == "week" & inputr == "author"){
+convert.setDate(convert.getDate()-7)
+ var cmon = convert.toISOString().slice(0,10)
+ var result = httpGet("http://api.chartbeat.com/query/v2/submit/page/?host=" + input3 + "&apikey=" + input2 + "&start=" + cmon + "&end=" + d + "&metrics=page_views&dimensions=" + inputr);
+
+ console.log(result);
+
+ var obj = JSON.parse(result);
+
+ console.log(obj.query_id);
+
+ window.location = "http://api.chartbeat.com/query/v2/fetch/?host=" + input3 + "&apikey=" + input2 + "&query_id=" + obj.query_id;
+}
+else if (inputf == "month" & inputr == "author"){
+convert.setDate(convert.getDate()-30)
+ var cmon = convert.toISOString().slice(0,10)
+ var result = httpGet("http://api.chartbeat.com/query/v2/submit/page/?host=" + input3 + "&apikey=" + input2 + "&start=" + cmon + "&end=" + d + "&metrics=page_views&dimensions=" + inputr);
+
+ console.log(result);
+
+ var obj = JSON.parse(result);
+
+ console.log(obj.query_id);
+
+ window.location = "http://api.chartbeat.com/query/v2/fetch/?host=" + input3 + "&apikey=" + input2 + "&query_id=" + obj.query_id;
+}
+else if (inputf == "day" & inputr == "page_views"){
+convert.setDate(convert.getDate()-1)
+ var cmon = convert.toISOString().slice(0,10)
+ var result = httpGet("http://api.chartbeat.com/query/v2/submit/page/?host=" + input3 + "&apikey=" + input2 + "&sort_column=" + inputr + "&sort_order=desc&start=" + cmon + "&end=" + d + "&metrics=page_views&dimensions=path");
+
+ console.log(result);
+
+ var obj = JSON.parse(result);
+
+ console.log(obj.query_id);
+
+ window.location = "http://api.chartbeat.com/query/v2/fetch/?host=" + input3 + "&apikey=" + input2 + "&query_id=" + obj.query_id;
+}
+else if (inputf == "week" & inputr == "page_views"){
+convert.setDate(convert.getDate()-7)
+ var cmon = convert.toISOString().slice(0,10)
+ var result = httpGet("http://api.chartbeat.com/query/v2/submit/page/?host=" + input3 + "&apikey=" + input2 + "&sort_column=" + inputr + "&sort_order=desc&start=" + cmon + "&end=" + d + "&metrics=page_views&dimensions=path");
+
+ console.log(result);
+
+ var obj = JSON.parse(result);
+
+ console.log(obj.query_id);
+
+ window.location = "http://api.chartbeat.com/query/v2/fetch/?host=" + input3 + "&apikey=" + input2 + "&query_id=" + obj.query_id;
+}
+else if (inputf == "month" & inputr == "page_views"){
+convert.setDate(convert.getDate()-30)
+ var cmon = convert.toISOString().slice(0,10)
+ var result = httpGet("http://api.chartbeat.com/query/v2/submit/page/?host=" + input3 + "&apikey=" + input2 + "&sort_column=" + inputr + "&sort_order=desc&start=" + cmon + "&end=" + d + "&metrics=page_views&dimensions=path");
+
+ console.log(result);
+
+ var obj = JSON.parse(result);
+
+ console.log(obj.query_id);
+
+ window.location = "http://api.chartbeat.com/query/v2/fetch/?host=" + input3 + "&apikey=" + input2 + "&query_id=" + obj.query_id;
+}
+
+else if (inputf == "day" & inputr == "page_uniques"){
+convert.setDate(convert.getDate()-1)
+ var cmon = convert.toISOString().slice(0,10)
+ var result = httpGet("http://api.chartbeat.com/query/v2/submit/page/?host=" + input3 + "&apikey=" + input2 + "&sort_column=" + inputr + "&sort_order=desc&start=" + cmon + "&end=" + d + "&metrics=" + inputr + "&dimensions=referrer");
+
+ console.log(result);
+
+ var obj = JSON.parse(result);
+
+ console.log(obj.query_id);
+
+ window.location = "http://api.chartbeat.com/query/v2/fetch/?host=" + input3 + "&apikey=" + input2 + "&query_id=" + obj.query_id;
+}
+else if (inputf == "week" & inputr == "page_uniques"){
+convert.setDate(convert.getDate()-7)
+ var cmon = convert.toISOString().slice(0,10)
+ var result = httpGet("http://api.chartbeat.com/query/v2/submit/page/?host=" + input3 + "&apikey=" + input2 + "&sort_column=" + inputr + "&sort_order=desc&start=" + cmon + "&end=" + d + "&metrics=" + inputr + "&dimensions=referrer");
+
+ console.log(result);
+
+ var obj = JSON.parse(result);
+
+ console.log(obj.query_id);
+
+ window.location = "http://api.chartbeat.com/query/v2/fetch/?host=" + input3 + "&apikey=" + input2 + "&query_id=" + obj.query_id;
+}
+else (inputf == "month" & inputr == "page_uniques")
+convert.setDate(convert.getDate()-30)
+ var cmon = convert.toISOString().slice(0,10)
+ var result = httpGet("http://api.chartbeat.com/query/v2/submit/page/?host=" + input3 + "&apikey=" + input2 + "&sort_column=" + inputr + "&sort_order=desc&start=" + cmon + "&end=" + d + "&metrics=" + inputr + "&dimensions=referrer");
+
+ console.log(result);
+
+ var obj = JSON.parse(result);
+
+ console.log(obj.query_id);
+
+ window.location = "http://api.chartbeat.com/query/v2/fetch/?host=" + input3 + "&apikey=" + input2 + "&query_id=" + obj.query_id;
+}
+
+
+</script>
 </body>
 </html>
